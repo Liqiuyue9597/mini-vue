@@ -34,6 +34,7 @@ describe("effect", () => {
   it("scheduler", () => {
     let dummy;
     let run: any;
+    // jest 函数mock用法学习
     const scheduler = jest.fn(() => {
       run = runner;
     });
