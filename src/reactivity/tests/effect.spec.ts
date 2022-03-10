@@ -68,7 +68,7 @@ describe("effect", () => {
     obj.foo = 3
     expect(dummy).toBe(2);
 
-    // 收到call一次就把stop函数的作用移除了
+    // 函数在stop后手动call一次就把stop函数的作用移除了
     runner();
     expect(dummy).toBe(3);
   });
