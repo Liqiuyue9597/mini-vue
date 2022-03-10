@@ -1,6 +1,5 @@
 import { reactive } from "../reactive";
-import { effect } from "../effect";
-import { track } from "../effect";
+import { effect, stop } from "../effect";
 
 describe("effect", () => {
   it("happy path", () => {
@@ -52,5 +51,25 @@ describe("effect", () => {
     expect(dummy).toBe(1);
     run();
     expect(dummy).toBe(2);
+  });
+
+  // 单测的行为：1.写测试 2.让测试通过 3.重构
+  it('stop', () => {
+    let dummy;
+    const obj = reactive({ foo: 1 });
+    const runner = effect(
+      () => {
+        dummy = obj.foo;
+      }
+    );
+    obj.foo = 2;
+    expect(dummy).toBe(2);
+    stop(runner);
+    obj.foo = 3
+    expect(dummy).toBe(2);
+
+    // 收到call一次就把stop函数的作用移除了
+    runner();
+    expect(dummy).toBe(3);
   });
 });
