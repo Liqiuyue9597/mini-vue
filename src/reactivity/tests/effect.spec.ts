@@ -54,22 +54,35 @@ describe("effect", () => {
   });
 
   // 单测的行为：1.写测试 2.让测试通过 3.重构
-  it('stop', () => {
+  it("stop", () => {
     let dummy;
     const obj = reactive({ foo: 1 });
-    const runner = effect(
-      () => {
-        dummy = obj.foo;
-      }
-    );
+    const runner = effect(() => {
+      dummy = obj.foo;
+    });
     obj.foo = 2;
     expect(dummy).toBe(2);
     stop(runner);
-    obj.foo = 3
+    obj.foo = 3;
     expect(dummy).toBe(2);
 
     // 函数在stop后手动call一次就把stop函数的作用移除了
     runner();
     expect(dummy).toBe(3);
+  });
+
+  // 调用stop的回调函数
+  it("onStop", () => {
+    let dummy;
+    const obj = reactive({ foo: 1 });
+    const onStop = jest.fn();
+    const runner = effect(
+      () => {
+        dummy = obj.foo;
+      },
+      { onStop }
+    );
+    stop(runner);
+    expect(onStop).toBeCalledTimes(1); // toHaveBeenCalledTimes的别名
   });
 });
