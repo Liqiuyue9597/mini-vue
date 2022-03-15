@@ -3,7 +3,7 @@ import { extend } from "../shared";
 let activeEffect; //当前的effect函数
 let shouldTrack;
 
-function isTracking() {
+export function isTracking() {
   return activeEffect !== undefined && shouldTrack;
 }
 class ReactiveEffect {
@@ -59,6 +59,10 @@ export function track(target, key) {
     depsMap.set(key, dep);
   }
 
+  trackEffects(dep);
+}
+
+export function trackEffects(dep) {
   dep.add(activeEffect); // dep用来存储effect函数(ReactiveEffect实例)
   activeEffect.deps.push(dep); // 存储当前effect实例被存入的所有dep合集
 }
@@ -67,6 +71,10 @@ export function trigger(target, key) {
   let depsMap = targetMap.get(target);
   let dep = depsMap.get(key);
 
+  triggerEffects(dep);
+}
+
+export function triggerEffects(dep) {
   for (const effect of dep) {
     if (effect.scheduler) {
       effect.scheduler();
