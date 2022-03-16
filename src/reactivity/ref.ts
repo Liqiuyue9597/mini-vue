@@ -9,6 +9,7 @@ function convert(value) {
 class RefImpl {
   private _value: any;
   private _rawValue: any;
+  private __v_isRef = true;
   dep: Set<unknown>;
   constructor(value) {
     this._rawValue = value;
@@ -34,4 +35,27 @@ class RefImpl {
 
 export function ref(value) {
   return new RefImpl(value);
+}
+
+export function isRef(ref) {
+  return !!ref.__v_isRef;
+}
+
+export function unRef(ref) {
+  return isRef(ref) ? ref.value : ref;
+}
+
+export function proxyRef(obj) {
+  return new Proxy(obj, {
+    get(target, key) {
+      return unRef(Reflect.get(target, key));
+    },
+    set(target, key, value) {
+      if (!isRef(value) && isRef(target[key])) {
+        return (target[key].value = value);
+      } else {
+        return Reflect.set(target, key, value);
+      }
+    },
+  });
 }
