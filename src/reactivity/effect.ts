@@ -6,7 +6,7 @@ let shouldTrack;
 export function isTracking() {
   return activeEffect !== undefined && shouldTrack;
 }
-class ReactiveEffect {
+export class ReactiveEffect {
   private _fn: any; // effect里的依赖函数
   deps = []; // 当前ReactiveEffect实例被存入的dep合集
   active = true; // 有没有被stop住，被stop住就不是active的状态了

@@ -55,6 +55,7 @@ describe("ref", () => {
     expect(unRef(1)).toBe(1);
   });
 
+  // ProxyRef的作用就是让有ref对象的取值表现和纯对象一样
   it('proxyRef', () => {
     const user = {
       age: ref(10),
@@ -65,7 +66,15 @@ describe("ref", () => {
     expect(user.age.value).toBe(10);
     expect(proxyUser.age).toBe(10);
     expect(proxyUser.name).toBe('haha');
-
+    /**
+     * 实现的目标：对proxyUser的操作等价于在user上操作：
+     * 1.原来的值是ref对象
+     *   1.1新值是ref对象  -> 替换就行了
+     *   1.2新值是值 -> 把1中ref的.value值修改
+     * 2.原来的值是值
+     *   2.1新值是ref对象  -> 替换就行了
+     *   2.2新值是值 -> 替换就行了
+     */
     proxyUser.age = 20;
     expect(proxyUser.age).toBe(20);
     expect(user.age.value).toBe(20);

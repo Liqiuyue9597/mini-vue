@@ -30,6 +30,7 @@ describe("effect", () => {
     expect(runner).toBe("runner");
   });
 
+  // scheduler类似于回调函数（lazy load），等到effect里函数执行之后再执行
   it("scheduler", () => {
     let dummy;
     let run: any;
