@@ -6,6 +6,8 @@ export function render(vnode, container) {
 }
 
 function patch(vnode, container) {
+
+  // processElement(vnode, container);
   processComponent(vnode, container);
 }
 

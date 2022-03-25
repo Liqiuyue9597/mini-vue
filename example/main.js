@@ -1,10 +1,6 @@
-export const App = {
-  render() {
-    return h("div", "hi " + this.msg);
-  },
-  setup() {
-    return {
-      msg: "runtime-core",
-    };
-  },
-};
+import { createApp } from '../lib/guide-mini-vue.esm.js'
+import { App } from './App.js'
+
+
+const rootContainer = document.getElementById('app');
+createApp(App).mount(rootContainer)
