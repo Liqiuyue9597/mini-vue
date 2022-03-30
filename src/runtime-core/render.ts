@@ -27,7 +27,9 @@ function mountComponent(vnode, container) {
 }
 
 function setupRenderEffect(instance, container) {
-  const subTree = instance.render();
+  const { proxy } = instance;
+
+  const subTree = instance.render.call(proxy);
   patch(subTree, container);
 }
 function processElement(vnode: any, container: any) {
@@ -57,4 +59,3 @@ function mountChildren(vnode, container) {
     patch(v, container);
   });
 }
-
