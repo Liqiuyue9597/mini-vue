@@ -1,4 +1,4 @@
-import { componentPublicHandler, PublicInstanceProxyHandler } from "./componentPublicInstance";
+import { PublicInstanceProxyHandler } from "./componentPublicInstance";
 
 export function createComponentInstance(vnode) {
   const component = {
