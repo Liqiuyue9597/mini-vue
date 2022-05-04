@@ -8,7 +8,15 @@ export const App = {
     // [
     //   h('p', { class: 'pp' }, 'hello world'),
     // ]);
-    return h('div', { id: 'hello', class: 'mini-vue' }, 'hi ' + this.msg);
+    return h('div', 
+    { 
+      id: 'hello', 
+      class: 'mini-vue' ,
+      onClick() {
+        console.log('click');
+      }
+    }, 
+    'hi ' + this.msg);
   },
   setup() {
     return {
